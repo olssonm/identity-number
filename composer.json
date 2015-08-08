@@ -1,0 +1,47 @@
+{
+    "name": "olssonm/identity-number",
+    "description": "Laravel 5 validator for Swedish personal identity numbers / social security numbers (personnummer)",
+    "keywords": [
+        "olssonm",
+        "swedish",
+        "personal identity number",
+        "social security number",
+        "personnummer"
+    ],
+    "homepage": "https://github.com/olssonm/identity-number",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcus Olsson",
+            "email": "hello@marcusolsson.me",
+            "homepage": "https://marcusolsson.me"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.1",
+        "php" : ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "orchestra/testbench": "~3.0",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Olssonm\\IdentityNumber\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Olssonm\\IdentityNumber\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
