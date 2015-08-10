@@ -20,12 +20,12 @@ Via Composer
 $ composer require olssonm/identity-number
 ```
 
-#### With Laravel
+**Together with Laravel**
 
 As standard Laravel-procedure, just register the package in your providers array:
 
 ``` php
-providers = [
+'providers' = [
     Olssonm\IdentityNumber\IdentityNumberServiceProvider::class,
 ]
 ```
