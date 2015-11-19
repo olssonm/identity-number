@@ -25,7 +25,7 @@ $ composer require olssonm/identity-number
 As standard Laravel-procedure, just register the package in your providers array:
 
 ``` php
-'providers' = [
+'providers' => [
     Olssonm\IdentityNumber\IdentityNumberServiceProvider::class,
 ]
 ```
@@ -43,12 +43,12 @@ Pin::isValid('19771211-2775');
 
 #### Laravel 5
 
-The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `personal_identity_number`-rule.
+The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `personal_identity_number`-rule, just as you would with any other.
 
 ``` php
 public function store(Request $request) {
     $this->validate($request, [
-        'pnr' => 'personal_identity_number'
+        'pnr' => 'required|personal_identity_number'
     ]);
 }
 ```
@@ -57,7 +57,7 @@ Of course, you can roll your own error messages:
 
 ``` php
 $validator = Validator::make($request->all(), [
-    'pnr' => 'personal_identity_number'
+    'pnr' => 'required|personal_identity_number'
 ], [
     'pnr.personal_identity_number' => "Hey! That's not a personnummer!"
 ]);
