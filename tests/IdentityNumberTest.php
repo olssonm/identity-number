@@ -34,6 +34,17 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse(Pin::isValid('19860211-7313'));
         $this->assertFalse(Pin::isValid('8905257188'));
         $this->assertFalse(Pin::isValid('196711212850'));
+		// Obviously false
+		$this->assertFalse(Pin::isValid('00000000-0000'));
+		$this->assertFalse(Pin::isValid('11111111-1111'));
+		$this->assertFalse(Pin::isValid('22222222-2222'));
+		$this->assertFalse(Pin::isValid('33333333-3333'));
+		$this->assertFalse(Pin::isValid('44444444-4444'));
+		$this->assertFalse(Pin::isValid('55555555-5555'));
+		$this->assertFalse(Pin::isValid('66666666-6666'));
+		$this->assertFalse(Pin::isValid('77777777-7777'));
+		$this->assertFalse(Pin::isValid('88888888-8888'));
+		$this->assertFalse(Pin::isValid('99999999-9999'));
 	}
 
 	/** @test */
@@ -65,6 +76,17 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse($this->validate('19860211-7313'));
         $this->assertFalse($this->validate('8905257188'));
         $this->assertFalse($this->validate('196711212850'));
+		// Obviously false
+		$this->assertFalse($this->validate('000000000000'));
+		$this->assertFalse($this->validate('111111111111'));
+		$this->assertFalse($this->validate('222222222222'));
+		$this->assertFalse($this->validate('333333333333'));
+		$this->assertFalse($this->validate('444444444444'));
+		$this->assertFalse($this->validate('555555555555'));
+		$this->assertFalse($this->validate('666666666666'));
+		$this->assertFalse($this->validate('777777777777'));
+		$this->assertFalse($this->validate('888888888888'));
+		$this->assertFalse($this->validate('999999999999'));
 	}
 
     /** @test */

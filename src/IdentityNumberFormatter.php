@@ -52,6 +52,7 @@ class IdentityNumberFormatter
             $value = $newNumber;
         }
 
+        // Insert hyphen if you need to
         if($useHyphen == true) {
             $newNumber = null;
             for ($i=0; $i < strlen($value); $i++) {

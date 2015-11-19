@@ -1,7 +1,19 @@
 <?php namespace Olssonm\IdentityNumber;
 
+use DateTime;
+
 class IdentityNumber
 {
+    // "Special cases"
+    static protected $invalidNumbers = [
+        '0000000000',
+        '2222222222',
+        '4444444444',
+        '5555555555',
+        '7777777777',
+        '9999999999'
+    ];
+
     /**
      * Validate identity number
      * @param  string  $value the identity number
@@ -13,6 +25,10 @@ class IdentityNumber
         $IdentityNumberFormatter = new IdentityNumberFormatter($value, 10, false);
         $value = $IdentityNumberFormatter->getFormatted();
 
+        if(in_array($value, static::$invalidNumbers)) {
+            return false;
+        }
+
         // Check string length
         if (!preg_match("/^\d{10}$/", $value)) {
             return false;
@@ -20,20 +36,19 @@ class IdentityNumber
 
         // Check that the value is a date
         $dateTestStr = substr($value, 0, 6);
-        if(\DateTime::createFromFormat('ymd', $dateTestStr) == false) {
+        $date = DateTime::createFromFormat('ymd', $dateTestStr);
+        if(DateTime::createFromFormat('ymd', $dateTestStr) == false) {
             return false;
         }
 
         // Perform Luhn-test
         settype($value, 'string');
-        $sumTable = array(
-            array(0,1,2,3,4,5,6,7,8,9),
-            array(0,2,4,6,8,1,3,5,7,9)
-        );
+        $value = array_reverse(str_split($value));
         $sum = 0;
-        $flip = 0;
-        for ($i = strlen($value) - 1; $i >= 0; $i--) {
-            $sum += $sumTable[$flip++ & 0x1][$value[$i]];
+        foreach($value as $key => $value){
+            if($key % 2)
+            $value = $value * 2;
+            $sum += ($value >= 10 ? $value - 9 : $value);
         }
         return ($sum % 10 === 0);
     }
