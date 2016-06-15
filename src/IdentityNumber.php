@@ -4,7 +4,7 @@ use DateTime;
 
 class IdentityNumber
 {
-    // "Special cases"
+    // "Special cases", these should never be allowed
     static protected $invalidNumbers = [
         '0000000000',
         '2222222222',
@@ -16,10 +16,11 @@ class IdentityNumber
 
     /**
      * Validate identity number
-     * @param  string  $value the identity number
-     * @return boolean        if the validity is true/false
+     * @param  string  $value       the identity number
+     * @param  boolean $checkDate   flag if the date should be validated
+     * @return boolean              if the validity is true/false
      */
-    public static function isValid($value)
+    public static function isValid($value, $checkDate = true)
     {
         // Use the IdentityNumberFormatter to make the validation easier
         $IdentityNumberFormatter = new IdentityNumberFormatter($value, 10, false);
@@ -36,8 +37,8 @@ class IdentityNumber
 
         // Check that the value is a date
         $dateTestStr = substr($value, 0, 6);
-        $date = DateTime::createFromFormat('ymd', $dateTestStr);
-        if(DateTime::createFromFormat('ymd', $dateTestStr) == false) {
+        $validDate = self::validateDate($dateTestStr);
+        if ($checkDate == true && $validDate == false) {
             return false;
         }
 
@@ -51,5 +52,17 @@ class IdentityNumber
             $sum += ($value >= 10 ? $value - 9 : $value);
         }
         return ($sum % 10 === 0);
+    }
+
+    /**
+     * Validate a date as a format
+     * @param  string $dateTestStr the date to be tested
+     * @param  string $format      the date format
+     * @return boolean             if the test passes
+     */
+    private static function validateDate($dateTestStr, $format = 'ymd')
+    {
+        $date = DateTime::createFromFormat('ymd', $dateTestStr);
+        return $date && $date->format($format) == $dateTestStr;
     }
 }
