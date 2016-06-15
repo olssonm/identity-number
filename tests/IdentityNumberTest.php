@@ -89,6 +89,44 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 		$this->assertFalse($this->validate('999999999999'));
 	}
 
+	/** @test **/
+	public function test_valid_org_no()
+	{
+		// Standalone
+		$this->assertTrue(Pin::isValid('556016-0680', false)); // Ericsson AB
+		$this->assertTrue(Pin::isValid('556103-4249', false)); // Telia AB
+
+		// Validation
+		$this->assertTrue($this->validateOrgNo('556809-9963')); // IKEA AB
+		$this->assertTrue($this->validateOrgNo('969663-7033')); // Skellefteå Energi Underhåll Handelsbolag
+	}
+
+	/** @test **/
+	public function test_invalid_org_no()
+	{
+		// Standalone
+		$this->assertFalse(Pin::isValid('556016-0681', false)); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240', false)); // Telia AB
+
+		// Validation
+		$this->assertFalse($this->validateOrgNo('556809-9964')); // IKEA AB
+		$this->assertFalse($this->validateOrgNo('969663-7034')); // Skellefteå Energi Underhåll Handelsbolag
+
+		// Validate so that companies org. numbers doesn't pass as a PIN
+		$this->assertFalse(Pin::isValid('556016-0681')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240')); // Telia AB
+	}
+
+	/** @test **/
+	public function test_org_no_as_pin()
+	{
+		// Validate so that companies org. numbers doesn't pass as a PIN
+		$this->assertFalse(Pin::isValid('556016-0681')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240')); // Telia AB
+		$this->assertFalse($this->validate('556809-9964')); // IKEA AB
+		$this->assertFalse($this->validate('969663-7034')); // Skellefteå Energi Underhåll Handelsbolag
+	}
+
     /** @test */
     public function test_gibberish_data()
 	{
@@ -102,6 +140,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse($this->validate('Gibberish'));
 	}
 
+	/** @test */
 	public function test_error_message()
 	{
 		$this->assertEquals('A standard message', $this->validateWithErrorMessage('600412-8177', 'A standard message'));
@@ -111,7 +150,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
     /**
-     * validate
+     * Validate personal identity number
      * @param  mixed $pin	the personal identity number
      * @return bool         whether the validation passes or not
      */
@@ -125,7 +164,21 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     }
 
 	/**
-     * validate
+     * Validate org no
+     * @param  mixed $pin	the personal identity number
+     * @return bool         whether the validation passes or not
+     */
+    private function validateOrgNo($number) {
+        $data = ['org_no' => $number];
+        $validator = Validator::make($data, [
+            'org_no' => 'org_number|required',
+        ]);
+
+        return $validator->passes();
+    }
+
+	/**
+     * Validate with error message
      * @param  mixed $pin	 the personal identity number
      * @return bool          whether the validation passes or not
      */

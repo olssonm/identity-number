@@ -18,7 +18,15 @@ class IdentityNumberServiceProvider extends ServiceProvider
          */
         $this->app['validator']->extend('personal_identity_number', function ($attribute, $value, $parameters)
         {
-            return IdentityNumber::isValid($value);
+            return IdentityNumber::isValid($value, true);
+        });
+
+        /**
+         * Extend the Laravel Validator with the "org_number" rule
+         */
+        $this->app['validator']->extend('org_number', function ($attribute, $value, $parameters)
+        {
+            return IdentityNumber::isValid($value, false);
         });
     }
 
@@ -27,5 +35,8 @@ class IdentityNumberServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register() {}
+    public function register()
+    {
+        //
+    }
 }
