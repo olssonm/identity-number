@@ -14,6 +14,14 @@ Of course you can throw any format you wish at the validator, ie. 10-digit varia
 
 **Note:** Since 2.0 you may also validate Swedish organization numbers (organisationsnummer). Before this you could in most cases validate an org. no. with `personal_identity_number`, this is no longer possible due to tighter date validation on PINs. Please use `org_number` instead.
 
+## Version Compatibility
+
+ Laravel  | identity-number
+:---------|:----------
+ 5.1.x    | 2.x
+ 5.2.x    | 2.x
+ 5.3.x    | 3.x
+
 ## Install
 
 Via Composer
