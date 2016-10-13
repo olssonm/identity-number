@@ -21,39 +21,50 @@ class Validator
         '9999999999'
     ];
 
+    public function __construct() {}
+
+    /**
+     * Main validation method
+     * @param  string  $number the number under validation
+     * @return boolean
+     */
     public function isValid($number)
     {
-        $formatter = new IdentityNumberFormatter($number, 10, false);
-        $value = $formatter->getFormatted();
-
         switch ($this->type) {
             case Validator::IDENTITYNUMBER:
-                return $this->validate($value, true);
+                $number = $this->formatNumber($number);
+                return $this->validate($number, true);
                 break;
 
             case Validator::ORGANISATIONNUMBER:
-                return $this->validate($value, false);
+                $number = $this->formatNumber($number);
+                return $this->validate($number, false);
                 break;
 
             case Validator::COORDINATIONNUMBER:
-                $value = $this->formatCoordination($value);
-                return $this->validate($value, true);
+                return $this->validate($number, true);
                 break;
         }
 
         return false;
     }
 
-    private function validate($value, $checkDate)
+    /**
+     * Internal validator
+     * @param  string   $number     the value under validation
+     * @param  boolean  $checkDate if date validation is to be performed
+     * @return boolean
+     */
+    private function validate($number, $checkDate)
     {
         // Perform simple test on invalid numbers
-        if(in_array($value, $this->invalidNumbers)) {
+        if(in_array($number, $this->invalidNumbers)) {
             return false;
         }
 
         // If checking for a date
         if ($checkDate == true) {
-            $dateTest = substr($value, 0, 6);
+            $dateTest = substr($number, 0, 6);
             $validDate = $this->validDate($dateTest);
             if ($validDate == false) {
                 return false;
@@ -61,40 +72,44 @@ class Validator
         }
 
         // Check luhn
-        return $this->luhn($value);
+        return $this->luhn($number);
     }
 
-    private function luhn($value)
+    protected function formatNumber($number)
     {
-        settype($value, 'string');
-        $value = array_reverse(str_split($value));
+        $formatter = new IdentityNumberFormatter($number, 10, false);
+        $value = $formatter->getFormatted();
+
+        return $value;
+    }
+
+    /**
+     * Perform luhn validation
+     * @param  string $number
+     * @return boolean
+     */
+    private function luhn($number)
+    {
+        settype($number, 'string');
+        $number = array_reverse(str_split($number));
         $sum = 0;
-        foreach($value as $key => $value){
+        foreach($number as $key => $number){
             if($key % 2)
-            $value = $value * 2;
-            $sum += ($value >= 10 ? $value - 9 : $value);
+            $number = $number * 2;
+            $sum += ($number >= 10 ? $number - 9 : $number);
         }
         return ($sum % 10 === 0);
     }
 
-    private function formatCoordination($value)
-    {
-        // Retrieve the last to digits of the birthday
-        $birthday = (int)substr($value, 4, 2);
-        $birthday = substr_replace($value, ($birthday - 60), 4, 2);
-
-        return $birthday;
-    }
-
     /**
      * Validate a date as a format
-     * @param  string $dateTestStr the date to be tested
-     * @param  string $format      the date format
-     * @return boolean             if the test passes
+     * @param  string $dateTest     the date to be tested
+     * @param  string $format       the date format
+     * @return boolean
      */
-    private function validDate($dateTestStr, $format = 'ymd')
+    private function validDate($dateTest, $format = 'ymd')
     {
-        $date = DateTime::createFromFormat('ymd', $dateTestStr);
-        return $date && $date->format($format) == $dateTestStr;
+        $date = DateTime::createFromFormat('ymd', $dateTest);
+        return $date && $date->format($format) == $dateTest;
     }
 }

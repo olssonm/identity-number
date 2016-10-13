@@ -1,11 +1,7 @@
 <?php namespace Olssonm\IdentityNumber;
 
-use Olssonm\IdentityNumber\OrganisationNumber;
-use Olssonm\IdentityNumber\IdentityNumber;
-use Olssonm\IdentityNumber\CoordinationNumber;
-
 /**
- *
+ * Static helper-class for accessing the validation methods statically
  */
 class Pin
 {
