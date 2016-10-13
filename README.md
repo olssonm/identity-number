@@ -4,23 +4,22 @@
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
 
-Validator for Swedish personal identity numbers, a.k.a. social security number ("personnummer") and organization numbers ("organisationsnummer").
+Validator for Swedish "personnummer" (a.k.a. personal identity number, social security number or simply "PIN").
+
+This validator also handles Swedish organization numbers and the temporary personal identity number known as "Samordningsnummer" (a.k.a. coordination number).
 
 For use either as a standalone package, or with Laravel 5.
 
 The package does not only apply the Luhn-algorithm for the last four digits, but also checks that the date of birth is a valid date.
 
-Of course you can throw any format you wish at the validator, ie. 10-digit variant (`7712112775`) or the 12-digit variant (`197712112775`) and with or without a hyphen (`19771211-2775`).
-
-**Note:** Since 2.0 you may also validate Swedish organization numbers (organisationsnummer). Before this you could in most cases validate an org. no. with `personal_identity_number`, this is no longer possible due to tighter date validation on PINs. Please use `org_number` instead.
+Of course you can throw pretty much any format you wish at the validator, ie. 10-digit variant (`7712112775`) or the 12-digit variant (`197712112775`) and with or without a hyphen (`771211-2775`, `19771211-2775`).
 
 ## Version Compatibility
 
- Laravel  | identity-number
-:---------|:----------
- 5.1.x    | 2.x
- 5.2.x    | 2.x
- 5.3.x    | 3.x
+ Laravel      | identity-number
+:-------------|:----------
+ 5.1.x/ 5.2.x | 2.x
+ 5.3.x        | >3.x
 
 ## Install
 
@@ -42,37 +41,61 @@ As standard Laravel-procedure, just register the package in your providers array
 
 ## Usage
 
-#### Standalone
+### Standalone
 
-```php
-use Olssonm\IdentityNumber\IdentityNumber as Pin;
+The package is usable straight out of the box once installed with composer:
 
-Pin::isValid('19771211-2775'); // Validate PIN
+``` php
+use Olssonm\IdentityNumber\Pin;
+```
+
+#### Personnummer ("personal identity numbers")
+
+``` php
+Pin::isValid('19771211-2775'); // Defaults to identity number
 // true
 
-Pin::isValid('556016-0681', false); // Validate Org. No.
+Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 // true
 ```
 
-The second parameters tells the validator if the date contained within the PIN/org. no. should be checked.
-
-#### Laravel 5
-
-The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `personal_identity_number`- and `org_number`-rules, just as you would with any other rule.
+#### Sambandsnummer ("coordination numbers")
 
 ``` php
+Pin::isValid('19671180-2850', 'coordination');
+// True
+```
 
-// PIN
+#### Organisationsnummer ("organization numbers")
+
+``` php
+Pin::isValid('556016-0681', 'organisation')
+// True
+```
+
+### Laravel 5
+
+The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `identity_number`-, `coordination_number`- and `organisation_number`-rules, just as you would with any other rule.
+
+``` php
+// Personal identity numbers
 public function store(Request $request) {
     $this->validate($request, [
-        'pnr' => 'required|personal_identity_number'
+        'number' => 'required|identity_number'
     ]);
 }
 
-// Org. no.
+// Coordination numbers
 public function store(Request $request) {
     $this->validate($request, [
-        'org_no' => 'required|org_number'
+        'number' => 'required|coordination_number'
+    ]);
+}
+
+// Organization numbers
+public function store(Request $request) {
+    $this->validate($request, [
+        'number' => 'required|organisation_number'
     ]);
 }
 ```
@@ -81,9 +104,9 @@ Of course, you can roll your own error messages:
 
 ``` php
 $validator = Validator::make($request->all(), [
-    'pnr' => 'required|personal_identity_number'
+    'number' => 'required|identity_number'
 ], [
-    'pnr.personal_identity_number' => "Hey! That's not a personnummer!"
+    'number.identity_number' => "Hey! That's not a personnummer!"
 ]);
 
 if($validator->fails()) {

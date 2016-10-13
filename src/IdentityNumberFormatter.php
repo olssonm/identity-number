@@ -3,8 +3,22 @@
 class IdentityNumberFormatter
 {
 
+    /**
+     * Set value
+     * @var string
+     */
     private $value;
+
+    /**
+     * Number of characters
+     * @var integer
+     */
     private $characters;
+
+    /**
+     * If hyphens is allowed
+     * @var boolean
+     */
     private $useHyphen;
 
     /**

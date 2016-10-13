@@ -1,7 +1,7 @@
 <?php namespace Olssonm\IdentityNumber\Tests;
 
 use Validator;
-use Olssonm\IdentityNumber\IdentityNumber as Pin;
+use Olssonm\IdentityNumber\Pin as Pin;
 
 class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 
@@ -21,19 +21,21 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     }
 
 	/** @test */
-	public function test_standalone_correct_personal_identity_numbers() {
+	public function test_standalone_correct_identity_numbers()
+	{
 		$this->assertTrue(Pin::isValid('600411-8177'));
         $this->assertTrue(Pin::isValid('19860210-7313'));
-        $this->assertTrue(Pin::isValid('8905247188'));
-        $this->assertTrue(Pin::isValid('196711202850'));
+        $this->assertTrue(Pin::isValid('8905247188', 'identity'));
+        $this->assertTrue(Pin::isValid('196711202850', 'identity'));
 	}
 
 	/** @test */
-	public function test_standalone_incorrect_personal_identity_numbers() {
+	public function test_standalone_incorrect_identity_numbers() {
 		$this->assertFalse(Pin::isValid('600412-8177'));
         $this->assertFalse(Pin::isValid('19860211-7313'));
         $this->assertFalse(Pin::isValid('8905257188'));
         $this->assertFalse(Pin::isValid('196711212850'));
+
 		// Obviously false
 		$this->assertFalse(Pin::isValid('00000000-0000'));
 		$this->assertFalse(Pin::isValid('11111111-1111'));
@@ -48,6 +50,34 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test */
+	public function test_standalone_correct_organisation_numbers()
+	{
+		$this->assertTrue(Pin::isValid('556016-0680', 'organisation')); // Ericsson AB
+		$this->assertTrue(Pin::isValid('556103-4249', 'organisation')); // Telia AB
+	}
+
+	/** @test */
+	public function test_standalone_incorrect_organisation_numbers()
+	{
+		$this->assertFalse(Pin::isValid('556016-0681', 'organisation')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240', 'organisation')); // Telia AB
+	}
+
+	/** @test */
+	public function test_standalone_correct_coordination_numbers()
+	{
+		$this->assertTrue(Pin::isValid('780161-1117', 'coordination'));
+		$this->assertTrue(Pin::isValid('19610280-2425', 'coordination'));
+	}
+
+	// /** @test */
+	public function test_standalone_incorrect_coordination_numbers()
+	{
+		$this->assertFalse(Pin::isValid('780161-1116', 'coordination'));
+		$this->assertFalse(Pin::isValid('19610280-2424', 'coordination'));
+	}
+
+	// /** @test */
     public function test_standalone_gibberish_data()
 	{
 		$this->assertFalse(Pin::isValid(null));
@@ -61,7 +91,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test */
-	public function test_correct_personal_identity_numbers()
+	public function test_correct_identity_numbers()
 	{
         $this->assertTrue($this->validate('600411-8177'));
         $this->assertTrue($this->validate('19860210-7313'));
@@ -70,7 +100,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
     /** @test */
-    public function test_incorrect_personal_identity_numbers()
+    public function test_incorrect_identity_numbers()
 	{
         $this->assertFalse($this->validate('600412-8177'));
         $this->assertFalse($this->validate('19860211-7313'));
@@ -90,19 +120,14 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test **/
-	public function test_valid_org_no()
+	public function test_correct_organisation_numbers()
 	{
-		// Standalone
-		$this->assertTrue(Pin::isValid('556016-0680', false)); // Ericsson AB
-		$this->assertTrue(Pin::isValid('556103-4249', false)); // Telia AB
-
-		// Validation
 		$this->assertTrue($this->validateOrgNo('556809-9963')); // IKEA AB
 		$this->assertTrue($this->validateOrgNo('969663-7033')); // Skellefteå Energi Underhåll Handelsbolag
 	}
 
 	/** @test **/
-	public function test_invalid_org_no()
+	public function test_incorrect_organisation_numbers()
 	{
 		// Standalone
 		$this->assertFalse(Pin::isValid('556016-0681', false)); // Ericsson AB
@@ -118,11 +143,27 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test **/
+	public function test_correct_coordination_numbers()
+	{
+		$this->assertTrue($this->validateCoordNo('6102802425'));
+		$this->assertTrue($this->validateCoordNo('19890362-4529'));
+	}
+
+	/** @test **/
+	public function test_incorrect_coordination_numbers()
+	{
+		$this->assertFalse($this->validateCoordNo('6102802424'));
+		$this->assertFalse($this->validateCoordNo('6102202425'));
+		$this->assertFalse($this->validateCoordNo('19890362-4528'));
+		$this->assertFalse($this->validateCoordNo('19890302-4529'));
+	}
+
+	/** @test **/
 	public function test_org_no_as_pin()
 	{
 		// Validate so that companies org. numbers doesn't pass as a PIN
-		$this->assertFalse(Pin::isValid('556016-0681')); // Ericsson AB
-		$this->assertFalse(Pin::isValid('556103-4240')); // Telia AB
+		$this->assertFalse(Pin::isValid('556016-0681', 'organisation')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240', 'organisation')); // Telia AB
 		$this->assertFalse($this->validate('556809-9964')); // IKEA AB
 		$this->assertFalse($this->validate('969663-7034')); // Skellefteå Energi Underhåll Handelsbolag
 	}
@@ -144,7 +185,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	public function test_error_message()
 	{
 		$this->assertEquals('A standard message', $this->validateWithErrorMessage('600412-8177', 'A standard message'));
-		$this->assertEquals('validation.personal_identity_number', $this->validateWithErrorMessage('600412-8177', null));
+		$this->assertEquals('validation.identity_number', $this->validateWithErrorMessage('600412-8177', null));
 		$this->assertEquals(true, $this->validateWithErrorMessage('600412-8177', true));
 		$this->assertEquals(false, $this->validateWithErrorMessage('600412-8177', false));
 	}
@@ -155,9 +196,9 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
      * @return bool         whether the validation passes or not
      */
     private function validate($pin) {
-        $data = ['pnr' => $pin];
+        $data = ['identity_no' => $pin];
         $validator = Validator::make($data, [
-            'pnr' => 'personal_identity_number|required',
+            'identity_no' => 'identity_number|required',
         ]);
 
         return $validator->passes();
@@ -171,7 +212,21 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     private function validateOrgNo($number) {
         $data = ['org_no' => $number];
         $validator = Validator::make($data, [
-            'org_no' => 'org_number|required',
+            'org_no' => 'organisation_number|required',
+        ]);
+
+        return $validator->passes();
+    }
+
+	/**
+     * Validate coordination number
+     * @param  mixed $pin	the personal identity number
+     * @return bool         whether the validation passes or not
+     */
+    private function validateCoordNo($number) {
+        $data = ['coordination_no' => $number];
+        $validator = Validator::make($data, [
+            'coordination_no' => 'coordination_number|required',
         ]);
 
         return $validator->passes();
@@ -185,9 +240,9 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     private function validateWithErrorMessage($pin, $message) {
         $data = ['pnr' => $pin];
         $validator = Validator::make($data, [
-            'pnr' => 'personal_identity_number',
+            'pnr' => 'identity_number',
         ],[
-			'pnr.personal_identity_number' => $message
+			'pnr.identity_number' => $message
 		]);
 
 		$errors = $validator->errors();

@@ -1,8 +1,6 @@
 <?php namespace Olssonm\IdentityNumber;
 
 use Illuminate\Support\ServiceProvider;
-use Olssonm\IdentityNumber\IdentityNumberFormatter;
-use Olssonm\IdentityNumber\IdentityNumber;
 
 class IdentityNumberServiceProvider extends ServiceProvider
 {
@@ -14,19 +12,27 @@ class IdentityNumberServiceProvider extends ServiceProvider
     public function boot()
     {
         /**
-         * Extend the Laravel Validator with the "personal_identity_number" rule
+         * Extend the Laravel Validator with the "identity_number" rule
          */
-        $this->app['validator']->extend('personal_identity_number', function ($attribute, $value, $parameters)
+        $this->app['validator']->extend('identity_number', function ($attribute, $value, $parameters)
         {
-            return IdentityNumber::isValid($value, true);
+            return Pin::isValid($value, 'identity');
         });
 
         /**
-         * Extend the Laravel Validator with the "org_number" rule
+         * Extend the Laravel Validator with the "organisation_number" rule
          */
-        $this->app['validator']->extend('org_number', function ($attribute, $value, $parameters)
+        $this->app['validator']->extend('organisation_number', function ($attribute, $value, $parameters)
         {
-            return IdentityNumber::isValid($value, false);
+            return Pin::isValid($value, 'organisation');
+        });
+
+        /**
+         * Extend the Laravel Validator with the "coordination_number" rule
+         */
+        $this->app['validator']->extend('coordination_number', function ($attribute, $value, $parameters)
+        {
+            return Pin::isValid($value, 'coordination');
         });
     }
 
