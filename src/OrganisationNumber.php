@@ -2,10 +2,10 @@
 
 use DateTime;
 
-class IdentityNumber extends Validator
+class OrganisationNumber extends Validator
 {
     public function __construct()
     {
-        $this->type = Validator::IDENTITYNUMBER;
+        $this->type = Validator::ORGANISATIONNUMBER;
     }
 }
