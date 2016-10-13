@@ -6,7 +6,7 @@ class Validator
 {
     const IDENTITYNUMBER = 'personal_identity_number';
 
-    const ORGANISATIONNUMBER = 'organisation_number';
+    const ORGANIZATIONNUMBER = 'organization_number';
 
     const COORDINATIONNUMBER = 'coordination_number';
 
@@ -37,7 +37,7 @@ class Validator
                 return $this->validate($number, true);
                 break;
 
-            case Validator::ORGANISATIONNUMBER:
+            case Validator::ORGANIZATIONNUMBER:
                 return $this->validate($number, false);
                 break;
 

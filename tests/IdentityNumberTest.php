@@ -50,17 +50,17 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test */
-	public function test_standalone_correct_organisation_numbers()
+	public function test_standalone_correct_organization_numbers()
 	{
-		$this->assertTrue(Pin::isValid('556016-0680', 'organisation')); // Ericsson AB
-		$this->assertTrue(Pin::isValid('556103-4249', 'organisation')); // Telia AB
+		$this->assertTrue(Pin::isValid('556016-0680', 'organization')); // Ericsson AB
+		$this->assertTrue(Pin::isValid('556103-4249', 'organization')); // Telia AB
 	}
 
 	/** @test */
-	public function test_standalone_incorrect_organisation_numbers()
+	public function test_standalone_incorrect_organization_numbers()
 	{
-		$this->assertFalse(Pin::isValid('556016-0681', 'organisation')); // Ericsson AB
-		$this->assertFalse(Pin::isValid('556103-4240', 'organisation')); // Telia AB
+		$this->assertFalse(Pin::isValid('556016-0681', 'organization')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240', 'organization')); // Telia AB
 	}
 
 	/** @test */
@@ -120,14 +120,14 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	}
 
 	/** @test **/
-	public function test_correct_organisation_numbers()
+	public function test_correct_organization_numbers()
 	{
 		$this->assertTrue($this->validateOrgNo('556809-9963')); // IKEA AB
 		$this->assertTrue($this->validateOrgNo('969663-7033')); // Skellefteå Energi Underhåll Handelsbolag
 	}
 
 	/** @test **/
-	public function test_incorrect_organisation_numbers()
+	public function test_incorrect_organization_numbers()
 	{
 		// Standalone
 		$this->assertFalse(Pin::isValid('556016-0681', false)); // Ericsson AB
@@ -162,8 +162,8 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	public function test_org_no_as_pin()
 	{
 		// Validate so that companies org. numbers doesn't pass as a PIN
-		$this->assertFalse(Pin::isValid('556016-0681', 'organisation')); // Ericsson AB
-		$this->assertFalse(Pin::isValid('556103-4240', 'organisation')); // Telia AB
+		$this->assertFalse(Pin::isValid('556016-0681', 'organization')); // Ericsson AB
+		$this->assertFalse(Pin::isValid('556103-4240', 'organization')); // Telia AB
 		$this->assertFalse($this->validate('556809-9964')); // IKEA AB
 		$this->assertFalse($this->validate('969663-7034')); // Skellefteå Energi Underhåll Handelsbolag
 	}
@@ -212,7 +212,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     private function validateOrgNo($number) {
         $data = ['org_no' => $number];
         $validator = Validator::make($data, [
-            'org_no' => 'organisation_number|required',
+            'org_no' => 'organization_number|required',
         ]);
 
         return $validator->passes();

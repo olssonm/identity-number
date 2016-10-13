@@ -19,8 +19,8 @@ class Pin
                 return $validator->isValid($number);
                 break;
 
-            case 'organisation':
-                $validator = new OrganisationNumber();
+            case 'organization':
+                $validator = new OrganizationNumber();
                 return $validator->isValid($number);
                 break;
 
