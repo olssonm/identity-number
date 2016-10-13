@@ -20,11 +20,11 @@ class IdentityNumberServiceProvider extends ServiceProvider
         });
 
         /**
-         * Extend the Laravel Validator with the "organisation_number" rule
+         * Extend the Laravel Validator with the "organization_number" rule
          */
-        $this->app['validator']->extend('organisation_number', function ($attribute, $value, $parameters)
+        $this->app['validator']->extend('organization_number', function ($attribute, $value, $parameters)
         {
-            return Pin::isValid($value, 'organisation');
+            return Pin::isValid($value, 'organization');
         });
 
         /**

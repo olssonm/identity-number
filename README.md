@@ -69,13 +69,13 @@ Pin::isValid('19671180-2850', 'coordination');
 #### Organisationsnummer ("organization numbers")
 
 ``` php
-Pin::isValid('556016-0681', 'organisation')
+Pin::isValid('556016-0681', 'organization')
 // True
 ```
 
 ### Laravel 5
 
-The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `identity_number`-, `coordination_number`- and `organisation_number`-rules, just as you would with any other rule.
+The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `identity_number`-, `coordination_number`- and `organization_number`-rules, just as you would with any other rule.
 
 ``` php
 // Personal identity numbers
@@ -95,7 +95,7 @@ public function store(Request $request) {
 // Organization numbers
 public function store(Request $request) {
     $this->validate($request, [
-        'number' => 'required|organisation_number'
+        'number' => 'required|organization_number'
     ]);
 }
 ```
