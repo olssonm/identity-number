@@ -10,6 +10,14 @@ class CoordinationNumber extends Validator
         parent::__construct();
     }
 
+    /**
+     * Overload the Validtor@isValid-method
+     *
+     * @NOTE The number has to be formatted before using the
+     * formatCoordination-method
+     * @param  string  $number the number
+     * @return boolean         [description]
+     */
     public function isValid($number)
     {
         $number = $this->formatNumber($number);
@@ -17,6 +25,11 @@ class CoordinationNumber extends Validator
         return parent::isValid($number);
     }
 
+    /**
+     * Format the coordination number (add/remove 60 from the birthday)
+     * @param  string $value the date/number
+     * @return boolean
+     */
     private function formatCoordination($value)
     {
         // Retrieve the last to digits of the birthday

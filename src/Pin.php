@@ -5,6 +5,12 @@
  */
 class Pin
 {
+    /**
+     * Main method used for validation, acts as a static helper
+     * @param  string  $number the number
+     * @param  string  $type   what type of validator to use
+     * @return boolean
+     */
     public static function isValid($number, $type = 'identity')
     {
         switch ($type) {
