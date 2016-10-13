@@ -6,7 +6,7 @@
 
 Validator for Swedish "personnummer" (a.k.a. personal identity number, social security number or simply "PIN").
 
-This validator also handles Swedish organization numbers and the temporary personal identity number known as "sambandsnummer" (a.k.a. coordination number).
+This validator also handles Swedish organization numbers and the temporary personal identity number known as "Samordningsnummer" (a.k.a. coordination number).
 
 For use either as a standalone package, or with Laravel 5.
 
