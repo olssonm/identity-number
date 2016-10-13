@@ -66,15 +66,15 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	/** @test */
 	public function test_standalone_correct_coordination_numbers()
 	{
-		$this->assertTrue(Pin::isValid('600471-8177', 'coordination'));
-		$this->assertTrue(Pin::isValid('196711802850', 'coordination'));
+		$this->assertTrue(Pin::isValid('780161-1117', 'coordination'));
+		$this->assertTrue(Pin::isValid('19610280-2425', 'coordination'));
 	}
 
 	// /** @test */
 	public function test_standalone_incorrect_coordination_numbers()
 	{
-		$this->assertFalse(Pin::isValid('8905857188', 'coordination'));
-		$this->assertFalse(Pin::isValid('556103-4240', 'coordination'));
+		$this->assertFalse(Pin::isValid('780161-1116', 'coordination'));
+		$this->assertFalse(Pin::isValid('19610280-2424', 'coordination'));
 	}
 
 	// /** @test */
@@ -145,16 +145,17 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	/** @test **/
 	public function test_correct_coordination_numbers()
 	{
-		$this->assertTrue($this->validateCoordNo('8905847188'));
-		$this->assertTrue($this->validateCoordNo('196711802850'));
+		$this->assertTrue($this->validateCoordNo('6102802425'));
+		$this->assertTrue($this->validateCoordNo('19890362-4529'));
 	}
 
 	/** @test **/
 	public function test_incorrect_coordination_numbers()
 	{
-		$this->assertFalse($this->validateCoordNo('8905247188'));
-		$this->assertFalse($this->validateCoordNo('8905857188'));
-		$this->assertFalse($this->validateCoordNo('196711812850'));
+		$this->assertFalse($this->validateCoordNo('6102802424'));
+		$this->assertFalse($this->validateCoordNo('6102202425'));
+		$this->assertFalse($this->validateCoordNo('19890362-4528'));
+		$this->assertFalse($this->validateCoordNo('19890302-4529'));
 	}
 
 	/** @test **/

@@ -30,19 +30,19 @@ class Validator
      */
     public function isValid($number)
     {
+        $number = $this->formatNumber($number);
+
         switch ($this->type) {
             case Validator::IDENTITYNUMBER:
-                $number = $this->formatNumber($number);
                 return $this->validate($number, true);
                 break;
 
             case Validator::ORGANISATIONNUMBER:
-                $number = $this->formatNumber($number);
                 return $this->validate($number, false);
                 break;
 
             case Validator::COORDINATIONNUMBER:
-                return $this->validate($number, true);
+                return $this->validate($number, false);
                 break;
         }
 
