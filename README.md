@@ -59,7 +59,7 @@ Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 // true
 ```
 
-#### Sambandsnummer ("coordination numbers")
+#### Samordningsnummer ("coordination numbers")
 
 ``` php
 Pin::isValid('19671180-2850', 'coordination');
@@ -100,7 +100,7 @@ public function store(Request $request) {
 }
 ```
 
-Of course, you can roll your own error messages:
+And of course, you can roll your own error messages:
 
 ``` php
 $validator = Validator::make($request->all(), [

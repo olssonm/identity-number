@@ -10,8 +10,17 @@ class Validator
 
     const COORDINATIONNUMBER = 'coordination_number';
 
+    /**
+     * Current validation type
+     * @var string
+     */
     protected $type;
 
+    /**
+     * Numbers that actually passes the Luhn-algorithm but
+     * that are non-valid
+     * @var array
+     */
     protected $invalidNumbers = [
         '0000000000',
         '2222222222',
@@ -75,6 +84,11 @@ class Validator
         return $this->luhn($number);
     }
 
+    /**
+     * Run the IdentityNumberFormatter on the specified number
+     * @param  string $number
+     * @return string
+     */
     protected function formatNumber($number)
     {
         $formatter = new IdentityNumberFormatter($number, 10, false);
