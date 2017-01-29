@@ -18,8 +18,8 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
 
  Laravel      | identity-number
 :-------------|:----------
- 5.1.x/ 5.2.x | 2.x
- 5.3.x        | >3.x
+ 5.1.x / 5.2.x | 2.x
+ 5.3.x / 5.4.x | >= 3.x
 
 ## Install
 
