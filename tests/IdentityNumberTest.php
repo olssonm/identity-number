@@ -36,6 +36,10 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse(Pin::isValid('8905257188'));
         $this->assertFalse(Pin::isValid('196711212850'));
 
+		// Malformed
+		$this->assertFalse(Pin::isValid('890'));
+		$this->assertFalse(Pin::isValid('aaa999'));
+
 		// Obviously false
 		$this->assertFalse(Pin::isValid('00000000-0000'));
 		$this->assertFalse(Pin::isValid('11111111-1111'));
@@ -61,6 +65,11 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	{
 		$this->assertFalse(Pin::isValid('556016-0681', 'organization')); // Ericsson AB
 		$this->assertFalse(Pin::isValid('556103-4240', 'organization')); // Telia AB
+
+		// Malformed
+		$this->assertFalse(Pin::isValid('55601', 'organization'));
+		$this->assertFalse(Pin::isValid('5561035', 'organization'));
+		$this->assertFalse(Pin::isValid('aaa888', 'organization'));
 	}
 
 	/** @test */
@@ -75,6 +84,11 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 	{
 		$this->assertFalse(Pin::isValid('780161-1116', 'coordination'));
 		$this->assertFalse(Pin::isValid('19610280-2424', 'coordination'));
+
+		// Malformed
+		$this->assertFalse(Pin::isValid('7801', 'coordination'));
+		$this->assertFalse(Pin::isValid('19610280-242', 'coordination'));
+		$this->assertFalse(Pin::isValid('aaa888', 'coordination'));
 	}
 
 	// /** @test */

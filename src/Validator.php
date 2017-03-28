@@ -41,6 +41,10 @@ class Validator
     {
         $number = $this->formatNumber($number);
 
+        if (!$number) {
+            return false;
+        }
+
         switch ($this->type) {
             case Validator::IDENTITYNUMBER:
                 return $this->validate($number, true);
