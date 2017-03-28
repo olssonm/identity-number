@@ -21,6 +21,8 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
  5.1.x / 5.2.x | 2.x
  5.3.x / 5.4.x | >= 3.x
 
+*Note: please check the corresponding readme.md for the correct documentation for each version.*
+
 ## Install
 
 Via Composer
@@ -59,17 +61,17 @@ Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 // true
 ```
 
-#### Samordningsnummer ("coordination numbers")
-
-``` php
-Pin::isValid('19671180-2850', 'coordination');
-// True
-```
-
 #### Organisationsnummer ("organization numbers")
 
 ``` php
 Pin::isValid('556016-0681', 'organization')
+// True
+```
+
+#### Samordningsnummer ("coordination numbers")
+
+``` php
+Pin::isValid('19671180-2850', 'coordination');
 // True
 ```
 
