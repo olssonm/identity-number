@@ -18,8 +18,8 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
 
  Laravel      | identity-number
 :-------------|:----------
- 5.1.x / 5.2.x | 2.x
- 5.3.x / 5.4.x | >= 3.x
+ 5.1.x / 5.2.x  | 2.x
+ 5.3.x / 5.4.x / 5.5.x | >= 5.x
 
 *Note: please check the corresponding readme.md for the correct documentation for each version.*
 
@@ -33,7 +33,13 @@ $ composer require olssonm/identity-number
 
 **Together with Laravel**
 
-As standard Laravel-procedure, just register the package in your providers array:
+Since v5.* (for Laravel 5.5) this package uses Package Auto-Discovery for loading the service provider. Once installed you should see the message
+
+```
+Discovered Package: olssonm/identity-number
+```
+
+Else, per standard Laravel-procedure, just register the package in your providers array:
 
 ``` php
 'providers' => [
@@ -134,7 +140,7 @@ $ phpunit
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-© 2016 [Marcus Olsson](https://marcusolsson.me).
+© 2017 [Marcus Olsson](https://marcusolsson.me).
 
 [ico-version]: https://img.shields.io/packagist/v/olssonm/identity-number.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
