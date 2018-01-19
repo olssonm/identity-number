@@ -22,6 +22,12 @@ class IdentityNumberFormatter
     private $useHyphen;
 
     /**
+     * What type of hyphen to use ("-"/+)
+     * @var string
+     */
+    private $typeHyphen = '-';
+
+    /**
      * Format the personal identity number to make validation easier
      * @param  string   $value          the input value
      * @param  int      $characters     number of characters
@@ -45,8 +51,13 @@ class IdentityNumberFormatter
         $characters = $this->characters;
         $useHyphen = $this->useHyphen;
 
+        // Check if "+" is present, then use it as a hyphen
+        if (strpos($value, '+') !== false) {
+            $this->typeHyphen = '+';
+        }
+
         // Remove hyphen
-        $value = str_replace('-', '', $value);
+        $value = str_replace(['-', '+'], '', $value);
 
         if(strlen($value) != 12 && strlen($value) != 10) {
             return false;
@@ -72,7 +83,7 @@ class IdentityNumberFormatter
             for ($i=0; $i < strlen($value); $i++) {
                 $newNumber .= $value[$i];
                 if($i == strlen($value) - 5) {
-                    $newNumber .= '-';
+                    $newNumber .= $this->typeHyphen;
                 }
             }
             $value = $newNumber;

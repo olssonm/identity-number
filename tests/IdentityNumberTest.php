@@ -2,6 +2,7 @@
 
 use Validator;
 use Olssonm\IdentityNumber\Pin as Pin;
+use Olssonm\IdentityNumber\IdentityNumberFormatter as IdentityNumberFormatter;
 
 class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 
@@ -21,10 +22,34 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
     }
 
 	/** @test */
+	public function test_identity_number_formatter()
+	{
+		$test1 = new IdentityNumberFormatter('19860210-7313', 12, true);
+		$this->assertEquals('19860210-7313', $test1->getFormatted());
+
+		$test2 = new IdentityNumberFormatter('19860210-7313', 10, true);
+		$this->assertEquals('860210-7313', $test2->getFormatted());
+
+		$test3 = new IdentityNumberFormatter('19860210-7313', 10, false);
+		$this->assertEquals('8602107313', $test3->getFormatted());
+
+		$test4 = new IdentityNumberFormatter('19121012+4412', 12, true);
+		$this->assertEquals('19121012+4412', $test4->getFormatted());
+
+		$test5 = new IdentityNumberFormatter('19121012+4412', 10, true);
+		$this->assertEquals('121012+4412', $test5->getFormatted());
+
+		$test6 = new IdentityNumberFormatter('19121012+4412', 10, false);
+		$this->assertEquals('1210124412', $test6->getFormatted());
+	}
+
+	/** @test */
 	public function test_standalone_correct_identity_numbers()
 	{
 		$this->assertTrue(Pin::isValid('600411-8177'));
         $this->assertTrue(Pin::isValid('19860210-7313'));
+		$this->assertTrue(Pin::isValid('600411+8177'));
+        $this->assertTrue(Pin::isValid('19860210+7313'));
         $this->assertTrue(Pin::isValid('8905247188', 'identity'));
         $this->assertTrue(Pin::isValid('196711202850', 'identity'));
 	}
@@ -111,6 +136,13 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertTrue($this->validate('19860210-7313'));
         $this->assertTrue($this->validate('8905247188'));
         $this->assertTrue($this->validate('196711202850'));
+	}
+
+	/** @test */
+	public function test_correct_identity_numbers_with_plus_as_hyphen()
+	{
+        $this->assertTrue($this->validate('600411+8177'));
+        $this->assertTrue($this->validate('19860210+7313'));
 	}
 
     /** @test */
