@@ -2,6 +2,9 @@
     "name": "olssonm/identity-number",
     "description": "Laravel 5 validator for Swedish personal identity numbers / social security numbers (personnummer)",
     "keywords": [
+        "Laravel",
+        "Laravel 5",
+        "package",
         "olssonm",
         "swedish",
         "personal identity number",
@@ -19,11 +22,11 @@
     ],
     "require": {
         "php" : ">=5.6.0|>=7.0",
-        "illuminate/support": "~5.3.28|~5.4|~5.5"
+        "illuminate/support": ">=5.3"
     },
     "require-dev": {
-        "phpunit/phpunit" : "5.7.*|~6.0",
-        "orchestra/testbench": "~3.4|~3.5"
+        "phpunit/phpunit" : "5.7.*|~6.0|~7.0",
+        "orchestra/testbench": ">=3.3.0"
     },
     "autoload": {
         "psr-4": {

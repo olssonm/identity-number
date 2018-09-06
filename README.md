@@ -1,4 +1,4 @@
-# Swedish "personnummer" validator for L5
+# Swedish "personnummer" validator for Laravel 5
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -16,10 +16,10 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
 
 ## Version Compatibility
 
- Laravel      | identity-number
-:-------------|:----------
- 5.1.x / 5.2.x  | 2.x
- 5.3.x / 5.4.x / 5.5.x | >= 5.x
+ Laravel                               | identity-number
+:--------------------------------------|:----------
+ 5.1.x / 5.2.x                         | 2.x
+ 5.3.x / 5.4.x / 5.5.x / 5.6.x / 5.7.0 | >= 5.x
 
 *Note: please check the corresponding readme.md for the correct documentation for each version.*
 
@@ -140,7 +140,7 @@ $ phpunit
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-© 2017 [Marcus Olsson](https://marcusolsson.me).
+© 2018 [Marcus Olsson](https://marcusolsson.me).
 
 [ico-version]: https://img.shields.io/packagist/v/olssonm/identity-number.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
