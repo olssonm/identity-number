@@ -2,6 +2,9 @@
 
 use DateTime;
 
+/**
+ * Main validation class
+ */
 class Validator
 {
     const IDENTITYNUMBER = 'personal_identity_number';
@@ -112,8 +115,12 @@ class Validator
         $number = array_reverse(str_split($number));
         $sum = 0;
         foreach($number as $key => $number){
-            if($key % 2)
-            $number = $number * 2;
+            if (!is_numeric($number)) {
+                return false;
+            }
+            if($key % 2) {
+                $number = $number * 2;
+            }
             $sum += ($number >= 10 ? $number - 9 : $number);
         }
         return ($sum % 10 === 0);

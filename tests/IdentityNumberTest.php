@@ -41,6 +41,12 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 
 		$test6 = new IdentityNumberFormatter('19121012+4412', 10, false);
 		$this->assertEquals('1210124412', $test6->getFormatted());
+
+		$test7 = new IdentityNumberFormatter('19860210 + 1100', 10, false);
+		$this->assertEquals('8602101100', $test7->clean()->getFormatted());
+
+		$test8 = new IdentityNumberFormatter('aa19860210-1100bb', 10, true);
+		$this->assertEquals('860210-1100', $test8->clean()->getFormatted());
 	}
 
 	/** @test */
@@ -104,7 +110,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 		$this->assertTrue(Pin::isValid('19610280-2425', 'coordination'));
 	}
 
-	// /** @test */
+	/** @test */
 	public function test_standalone_incorrect_coordination_numbers()
 	{
 		$this->assertFalse(Pin::isValid('780161-1116', 'coordination'));
@@ -116,7 +122,7 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 		$this->assertFalse(Pin::isValid('aaa888', 'coordination'));
 	}
 
-	// /** @test */
+	/** @test */
     public function test_standalone_gibberish_data()
 	{
 		$this->assertFalse(Pin::isValid(null));
@@ -124,9 +130,17 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse(Pin::isValid(true));
         $this->assertFalse(Pin::isValid(111000));
         $this->assertFalse(Pin::isValid(191919191919));
-        $this->assertFalse(Pin::isValid(19870822));
+        $this->assertFalse(Pin::isValid(19870101));
+		$this->assertFalse(Pin::isValid('780161 - 1117', 'coordination'));
         $this->assertFalse(Pin::isValid('Firstname Lastname'));
         $this->assertFalse(Pin::isValid('Gibberish'));
+	}
+
+	/** @test */
+	public function test_coordination_workflow()
+	{
+		$this->assertFalse(Pin::isValid('19860210 - 7313', 'coordination'));
+		$this->assertTrue(Pin::isValid((new IdentityNumberFormatter('a19860210 - 7313', 10, true))->clean()->getFormatted(), 'coordination'));
 	}
 
 	/** @test */
