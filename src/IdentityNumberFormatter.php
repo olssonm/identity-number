@@ -1,5 +1,8 @@
 <?php namespace Olssonm\IdentityNumber;
 
+/**
+ * Handles the identity number formatting 
+ */
 class IdentityNumberFormatter
 {
 
@@ -39,6 +42,19 @@ class IdentityNumberFormatter
         $this->value = $value;
         $this->characters = $characters;
         $this->useHyphen = $useHyphen;
+    }
+
+    /**
+     * Clean the value-string from unwanted characters
+     * @return \Olssonm\IdentityNumber\IdentityNumberFormatter
+     */
+    public function clean()
+    {
+        // Clean string from invalid values
+        $pattern = '0123456789-+';
+        $this->value = preg_replace("/[^".preg_quote($pattern, "/")."]/", '', $this->value);
+
+        return $this;
     }
 
     /**

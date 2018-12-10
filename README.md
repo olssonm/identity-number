@@ -57,7 +57,7 @@ The package is usable straight out of the box once installed with composer:
 use Olssonm\IdentityNumber\Pin;
 ```
 
-#### Personnummer ("personal identity numbers")
+#### Personnummer ("personal identity number")
 
 ``` php
 Pin::isValid('19771211-2775'); // Defaults to identity number
@@ -67,21 +67,41 @@ Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 // true
 ```
 
-#### Organisationsnummer ("organization numbers")
+#### Organisationsnummer ("organization number")
 
 ``` php
 Pin::isValid('556016-0681', 'organization')
 // True
 ```
 
-#### Samordningsnummer ("coordination numbers")
+#### Samordningsnummer ("coordination number")
 
 ``` php
 Pin::isValid('19671180-2850', 'coordination');
 // True
 ```
 
-### Laravel 5
+The coordination-number validator handles the same way as the personal identity-validator but does run a check on the birthdate.
+
+### The IdentityNumberFormatter-class
+
+The IdentityNumberFormatter-class allows you to format a PIN/identity for your custom needs. The class is also used internally for validation, but if you want to make sure you save the same value in the database as you pass for validation – you should also apply the formatting before validating.
+
+```php
+
+use Olssonm\IdentityNumber\IdentityNumberFormatter;
+
+// Format to a 10-character PIN without a seperator
+$formatter = new IdentityNumberFormatter('19860210-7313', 10, false);
+
+// Get the formatted output
+$formatter->getFormatted(); // 8602107313
+
+// You can also clean the number from all unwanted characters
+(new IdentityNumberFormatter('a19860210 - 7313', 12, true))->clean()->getFormatted(); // 19860210-7313
+```
+
+### Laravel 5 validators
 
 The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `identity_number`-, `coordination_number`- and `organization_number`-rules, just as you would with any other rule.
 
