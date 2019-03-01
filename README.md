@@ -19,7 +19,7 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
  Laravel                               | identity-number
 :--------------------------------------|:----------
  `5.1.x` / `5.2.x`                     | `2.x`
- `>=5.3.x | <=5.7.x`                   | `^5.x`
+ <code>>=5.3.x &#124; <=5.7.x</code>   | `^5.x`
  `>=5.8.x`                             | `^6.x`
 
 *Note: please check the corresponding readme.md for the correct documentation for each version.*
