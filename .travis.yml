@@ -11,9 +11,11 @@ script:
 
 matrix:
   include:
-    - php: 7.1
-      env: ILLUMINATE_VERSION=5.8.*
     - php: 7.2
       env: ILLUMINATE_VERSION=5.8.*
+    - php: 7.2
+      env: ILLUMINATE_VERSION=6.0
+    - php: 7.2
+      env: ILLUMINATE_VERSION=^6.0
     - php: 7.3
-      env: ILLUMINATE_VERSION=5.8.*
+      env: ILLUMINATE_VERSION=^6.0

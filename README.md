@@ -1,4 +1,4 @@
-# Swedish "personnummer" validator for Laravel 5
+# Swedish "personnummer" validator for Laravel
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -8,7 +8,7 @@ Validator for Swedish "personnummer" (a.k.a. personal identity number, social se
 
 This validator also handles Swedish organization numbers and the temporary personal identity number known as "Samordningsnummer" (a.k.a. coordination number).
 
-For use either as a standalone package, or with Laravel 5.
+For use either as a standalone package, or with Laravel.
 
 The package does not only apply the Luhn-algorithm for the last four digits, but also checks that the date of birth is a valid date.
 
@@ -20,7 +20,7 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
 :--------------------------------------|:----------
  `5.1.x` / `5.2.x`                     | `2.x`
  <code>>=5.3.x &#124; <=5.7.x</code>   | `^5.x`
- `>=5.8.x`                             | `^6.x`
+ `>=5.8.x` / `^6.0`                    | `^6.x` / `^6.1`
 
 *Note: please check the corresponding readme.md for the correct documentation for each version.*
 
@@ -34,7 +34,7 @@ $ composer require olssonm/identity-number
 
 **Together with Laravel**
 
-Since v5.* (for Laravel 5.5) this package uses Package Auto-Discovery for loading the service provider. Once installed you should see the message
+Since v5.* (for Laravel.5) this package uses Package Auto-Discovery for loading the service provider. Once installed you should see the message
 
 ```
 Discovered Package: olssonm/identity-number
@@ -72,17 +72,17 @@ Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 
 ``` php
 Pin::isValid('556016-0681', 'organization')
-// True
+// true
 ```
 
 #### Samordningsnummer ("coordination number")
 
 ``` php
 Pin::isValid('19671180-2850', 'coordination');
-// True
+// true
 ```
 
-The coordination-number validator handles the same way as the personal identity-validator but does run a check on the birthdate.
+The coordination-number validator handles the same way as the personal identity-validator but does not run a check/validation on the date of birth.
 
 ### The IdentityNumberFormatter-class
 
@@ -102,7 +102,7 @@ $formatter->getFormatted(); // 8602107313
 (new IdentityNumberFormatter('a19860210 - 7313', 12, true))->clean()->getFormatted(); // 19860210-7313
 ```
 
-### Laravel 5 validators
+### Laravel validators
 
 The package extends the `Illuminate\Validator` via a service provider, so all you have to do is use the `identity_number`-, `coordination_number`- and `organization_number`-rules, just as you would with any other rule.
 
@@ -161,7 +161,7 @@ $ phpunit
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-© 2018 [Marcus Olsson](https://marcusolsson.me).
+© 2019 [Marcus Olsson](https://marcusolsson.me).
 
 [ico-version]: https://img.shields.io/packagist/v/olssonm/identity-number.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
