@@ -309,4 +309,9 @@ class IdentityNumberTest extends \Orchestra\Testbench\TestCase {
 
         return $errors->first('pnr');
     }
+
+	public static function tearDownAfterClass() : void
+	{
+		parent::tearDownAfterClass();
+	}
 }
