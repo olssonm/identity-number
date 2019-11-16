@@ -72,17 +72,17 @@ Pin::isValid('19771211-2775', 'identity'); // Identity validation specified
 
 ``` php
 Pin::isValid('556016-0681', 'organization')
-// True
+// true
 ```
 
 #### Samordningsnummer ("coordination number")
 
 ``` php
 Pin::isValid('19671180-2850', 'coordination');
-// True
+// true
 ```
 
-The coordination-number validator handles the same way as the personal identity-validator but does run a check on the birthdate.
+The coordination-number validator handles the same way as the personal identity-validator but does not run a check/validation on the date of birth.
 
 ### The IdentityNumberFormatter-class
 
