@@ -20,7 +20,7 @@ Of course you can throw pretty much any format you wish at the validator, ie. 10
 :--------------------------------------|:----------
  `5.1.x` / `5.2.x`                     | `2.x`
  <code>>=5.3.x &#124; <=5.7.x</code>   | `^5.x`
- `>=5.8.x` / `^6.0`                    | `^6.x` / `^6.1`
+ `>=5.8.x` / `^6.0` / `^7.0`           | `^6.x` / `^6.1` / `^6.2`
 
 *Note: please check the corresponding readme.md for the correct documentation for each version.*
 
@@ -161,7 +161,7 @@ $ phpunit
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-© 2019 [Marcus Olsson](https://marcusolsson.me).
+© 2020 [Marcus Olsson](https://marcusolsson.me).
 
 [ico-version]: https://img.shields.io/packagist/v/olssonm/identity-number.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
