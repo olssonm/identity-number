@@ -1,4 +1,6 @@
-<?php namespace Olssonm\IdentityNumber;
+<?php
+
+namespace Olssonm\IdentityNumber;
 
 use DateTime;
 
@@ -15,6 +17,7 @@ class Validator
 
     /**
      * Current validation type
+     *
      * @var string
      */
     protected $type;
@@ -22,6 +25,7 @@ class Validator
     /**
      * Numbers that actually passes the Luhn-algorithm but
      * that are non-valid
+     *
      * @var array
      */
     protected $invalidNumbers = [
@@ -33,10 +37,14 @@ class Validator
         '9999999999'
     ];
 
-    public function __construct() {}
+    public function __construct()
+    {
+        //
+    }
 
     /**
      * Main validation method
+     *
      * @param  string  $number the number under validation
      * @return boolean
      */
@@ -67,6 +75,7 @@ class Validator
 
     /**
      * Internal validator
+     *
      * @param  string   $number     the value under validation
      * @param  boolean  $checkDate if date validation is to be performed
      * @return boolean
@@ -74,7 +83,7 @@ class Validator
     private function validate($number, $checkDate)
     {
         // Perform simple test on invalid numbers
-        if(in_array($number, $this->invalidNumbers)) {
+        if (in_array($number, $this->invalidNumbers)) {
             return false;
         }
 
@@ -93,6 +102,7 @@ class Validator
 
     /**
      * Run the IdentityNumberFormatter on the specified number
+     *
      * @param  string $number
      * @return string
      */
@@ -106,6 +116,7 @@ class Validator
 
     /**
      * Perform luhn validation
+     *
      * @param  string $number
      * @return boolean
      */
@@ -114,11 +125,11 @@ class Validator
         settype($number, 'string');
         $number = array_reverse(str_split($number));
         $sum = 0;
-        foreach($number as $key => $number){
+        foreach ($number as $key => $number) {
             if (!is_numeric($number)) {
                 return false;
             }
-            if($key % 2) {
+            if ($key % 2) {
                 $number = $number * 2;
             }
             $sum += ($number >= 10 ? $number - 9 : $number);
@@ -128,6 +139,7 @@ class Validator
 
     /**
      * Validate a date as a format
+     *
      * @param  string $dateTest     the date to be tested
      * @param  string $format       the date format
      * @return boolean

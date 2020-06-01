@@ -1,4 +1,6 @@
-<?php namespace Olssonm\IdentityNumber;
+<?php
+
+namespace Olssonm\IdentityNumber;
 
 use DateTime;
 
