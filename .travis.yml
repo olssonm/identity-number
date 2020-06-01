@@ -1,6 +1,8 @@
 language: php
 
-sudo: false
+dist: xenial
+
+os: linux
 
 before_script:
   - travis_retry composer self-update
@@ -9,7 +11,7 @@ before_script:
 script:
   - composer test
 
-matrix:
+jobs:
   include:
     - php: 7.2
       env: ILLUMINATE_VERSION=5.8.*
@@ -22,4 +24,6 @@ matrix:
     - php: 7.3
       env: ILLUMINATE_VERSION=^6.0
     - php: 7.3
+      env: ILLUMINATE_VERSION=^7.0
+    - php: 7.4
       env: ILLUMINATE_VERSION=^7.0
