@@ -3,6 +3,7 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
+[![Scrutinizer Score][ico-scrutinizer]][link-scrutinizer]
 
 Validator for Swedish "personnummer" (a.k.a. personal identity number, social security number or simply "PIN").
 
@@ -14,16 +15,6 @@ The package does not only apply the Luhn-algorithm for the last four digits, but
 
 Of course you can throw pretty much any format you wish at the validator, ie. 10-digit variant (`7712112775`) or the 12-digit variant (`197712112775`) and with or without a hyphen (`771211-2775`, `19771211-2775`).
 
-## Version Compatibility
-
- Laravel                               | identity-number
-:--------------------------------------|:----------
- `5.1.x` / `5.2.x`                     | `2.x`
- <code>>=5.3.x &#124; <=5.7.x</code>   | `^5.x`
- `>=5.8.x` / `^6.0` / `^7.0`           | `^6.x` / `^6.1` / `^6.2`
-
-*Note: please check the corresponding readme.md for the correct documentation for each version.*
-
 ## Install
 
 Via Composer
@@ -32,9 +23,9 @@ Via Composer
 $ composer require olssonm/identity-number
 ```
 
-**Together with Laravel**
+**Within Laravel**
 
-Since v5.* (for Laravel.5) this package uses Package Auto-Discovery for loading the service provider. Once installed you should see the message
+This package uses Package Auto-Discovery for loading the service provider. Once installed you should see the message
 
 ```
 Discovered Package: olssonm/identity-number
@@ -168,3 +159,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-travis]: https://img.shields.io/travis/olssonm/identity-number/master.svg?style=flat-square
 [link-packagist]: https://packagist.org/packages/olssonm/identity-number
 [link-travis]: https://travis-ci.org/olssonm/identity-number
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/g/olssonm/identity-number.svg?style=flat-square
+[link-scrutinizer]: https://scrutinizer-ci.com/g/olssonm/identity-number
