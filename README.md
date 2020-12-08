@@ -5,6 +5,14 @@
 [![Build Status][ico-travis]][link-travis]
 [![Scrutinizer Score][ico-scrutinizer]][link-scrutinizer]
 
+---
+
+⚠️ **Abandoned** This package has been abandoned in favor of [olssonm/swedish-entity](https://github.com/olssonm/swedish-entity).
+
+While the package will be usable for the forseeable future, it will not be updated. Please migrate to `olssonm/swedish-entity` when possible.
+
+---
+
 Validator for Swedish "personnummer" (a.k.a. personal identity number, social security number or simply "PIN").
 
 This validator also handles Swedish organization numbers and the temporary personal identity number known as "Samordningsnummer" (a.k.a. coordination number).
